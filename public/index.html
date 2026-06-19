@@ -34,6 +34,14 @@
       .messages li {
         padding: 4px 8px;
         cursor: default;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .messages li img.avatar {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
       }
       .messages li.mine {
         cursor: pointer;
@@ -142,8 +150,13 @@
             const messageList = document.querySelector('.messages')
             const li = document.createElement('li')
             li.id = 'msg-' + msgId
+            const avatar = document.createElement('img')
+            avatar.src = `https://api.dicebear.com/9.x/icons/svg?seed=${id}`
+            avatar.classList.add('avatar')
+            li.appendChild(avatar)
+            const span = document.createElement('span')
             if (id === myId) {
-              li.textContent = `(${id})自分: ` + text
+              span.textContent = `(${id})自分: ` + text
               li.classList.add('mine')
               li.addEventListener('click', () => {
                 if (!li.classList.contains('recalled')) {
@@ -151,8 +164,9 @@
                 }
               })
             } else {
-              li.textContent = id + ': ' + text
+              span.textContent = id + ': ' + text
             }
+            li.appendChild(span)
             messageList.appendChild(li)
           }
           if (msg.type === 'recall') {
